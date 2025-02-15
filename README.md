@@ -1,2 +1,2 @@
 # Mutiple-Disease-Prediction-Using-ML
-![App Screenshot](file:///C:/Users/Administrator/OneDrive/Pictures/Screenshots/Screenshot%202025-02-15%20125122.png)
+![Multiple_Disease_Prediction](https://github.com/user-attachments/assets/069193a7-353e-458a-a85e-f98f8e140be8)
