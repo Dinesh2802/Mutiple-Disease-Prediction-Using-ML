@@ -7,8 +7,8 @@ from PIL import Image
 import requests
 from io import BytesIO
 
-# Set up page configurations (optional)
-# st.set_page_config(page_title="Multiple Disease Prediction", layout="wide")
+#Set up page configurations (optional)
+#st.set_page_config(page_title="Multiple Disease Prediction", layout="centered")
 
 # Load ML models
 kidney_model = pickle.load(open('kidney_model.pkl', 'rb'))
@@ -45,6 +45,11 @@ background-color: rgba(0, 0, 0, 0);
 background-color: rgba(0, 0, 0, 0);
 background-size: cover;
 }
+
+.stApp{
+background: linear-gradient(to bottom, #ffebcd, #ffffff);
+}
+
 </style>
 """
 # Display the background image
@@ -55,7 +60,7 @@ with st.sidebar:
     selected = option_menu('Multiple Disease Prediction System',
                            ['Home', 'Kidney Prediction', 'Liver Prediction', 'Parkinsons Prediction'],
                            menu_icon='hospital-fill',
-                           icons=['activity', 'heart', 'person'],
+                           icons=['house', 'heart', 'person', 'activity'],
                            default_index=0)
 
 # Background styling
@@ -76,25 +81,29 @@ if selected == "Home":
     image_url ='https://tse1.mm.bing.net/th?id=OIP.obEy3w7reQp2zSgeKFB67gAAAA&pid=Api&P=0&h=180'
     base64_image = get_base64_image_from_url(image_url)
     
-    # Inject custom CSS with the base64-encoded image
     st.markdown(
         f"""
         <style>
         .custom-title {{
             font-size: 50px;
             color: white;
-            text-align: wide;
+            text-align: center;
             text-shadow: 2px 2px 4px black;
             padding: 60px;
             border-radius: 30px;
             background-image: url('data:image/png;base64,{base64_image}');
             background-size: cover;
-            background-position: wide;
+            background-position: center;
+            background-repeat: no-repeat;
+        }}
+        .stApp {{
+            background: linear-gradient(to bottom, #ffebcd, #ffffff);
         }}
         </style>
         """,
         unsafe_allow_html=True
     )
+
 
     # Display title
     st.markdown("<h1 class='custom-title'>🩺 MULTIPLE DISEASE PREDICTION SYSTEM</h1>", unsafe_allow_html=True)
@@ -136,10 +145,10 @@ if selected == "Kidney Prediction":
             bp = st.text_input('Blood Pressure')
 
         with col3:
-            al = st.text_input('Albumin')
+            al = st.text_input('Sugar')
 
         with col4:
-            su = st.text_input('Sugar')
+            su = st.text_input('Albumin')
 
         with col5:
             rbc = st.text_input('Red Blood Cells')
@@ -240,15 +249,13 @@ if selected == "Liver Prediction":
             with col3:
                 Albumin_and_Globulin_Ratio = st.text_input('Albumin_and_Globulin_Ratio')
 
-            with col1:
-                Gender_Male = st.text_input('Gender_Male')
 
             liver_diagnosis = ''
 
             if st.button("Liver Test Result"):
 
                 user_input = [age, Total_Bilirubin, Direct_Bilirubin, Alkaline_Phosphotase, Alamine_Aminotransferase,
-                                Aspartate_Aminotransferase,Total_Protiens, Albumin,Albumin_and_Globulin_Ratio,Gender_Male]
+                                Aspartate_Aminotransferase,Total_Protiens, Albumin,Albumin_and_Globulin_Ratio]
                 
                 user_input = [float(x) for x in user_input]
 
@@ -274,72 +281,43 @@ if selected == "Parkinsons Prediction":
             col1, col2, col3, col4, col5 = st.columns(5)
 
             with col1:
-                fo = st.text_input('MDVP:Fo(Hz)')
-
-            with col2:
-                fhi = st.text_input('MDVP:Fhi(Hz)')
-
-            with col3:
                 flo = st.text_input('MDVP:Flo(Hz)')
 
-            with col4:
+            with col2:
                 Jitter_percent = st.text_input('MDVP:Jitter(%)')
 
-            with col5:
-                Jitter_Abs = st.text_input('MDVP:Jitter(Abs)')
-
-            with col1:
+            with col3:
                 RAP = st.text_input('MDVP:RAP')
 
-            with col2:
+            with col4:
                 PPQ = st.text_input('MDVP:PPQ')
 
-            with col3:
+            with col5:
                 DDP = st.text_input('Jitter:DDP')
 
-            with col4:
+            with col1:
                 Shimmer = st.text_input('MDVP:Shimmer')
 
-            with col5:
-                Shimmer_dB = st.text_input('MDVP:Shimmer(dB)')
-
-            with col1:
-                APQ3 = st.text_input('Shimmer:APQ3')
-
             with col2:
-                APQ5 = st.text_input('Shimmer:APQ5')
-
-            with col3:
                 APQ = st.text_input('MDVP:APQ')
 
-            with col4:
+            with col3:
                 DDA = st.text_input('Shimmer:DDA')
 
-            with col5:
+            with col4:
                 NHR = st.text_input('NHR')
 
-            with col1:
+            with col5:
                 HNR = st.text_input('HNR')
 
-            with col2:
+            with col1:
                 RPDE = st.text_input('RPDE')
 
-            with col3:
+            with col2:
                 DFA = st.text_input('DFA')
 
-            with col4:
-                spread1 = st.text_input('spread1')
-
-            with col5:
-                spread2 = st.text_input('spread2')
-
-            with col1:
-                D2 = st.text_input('D2')
-
-            with col2:
+            with col3:
                 PPE = st.text_input('PPE')
-
-                
 
             # code for Prediction
             parkinsons_diagnosis = ''
@@ -347,9 +325,7 @@ if selected == "Parkinsons Prediction":
             # creating a button for Prediction    
             if st.button("Parkinson's Test Result"):
 
-                user_input = [fo, fhi, flo, Jitter_percent, Jitter_Abs,
-                            RAP, PPQ, DDP,Shimmer, Shimmer_dB, APQ3, APQ5,
-                            APQ, DDA, NHR, HNR, RPDE, DFA, spread1, spread2, D2, PPE]
+                user_input = [flo, Jitter_percent, RAP, PPQ, DDP, Shimmer, APQ, DDA, NHR, HNR, RPDE, DFA, PPE]
 
                 user_input = [float(x) for x in user_input]
 
